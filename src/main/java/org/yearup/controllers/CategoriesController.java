@@ -20,8 +20,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/categories")
 public class CategoriesController {
-    private CategoryService categoryService;
-    private ProductService productService;
+    private final CategoryService categoryService;
+    private final ProductService productService;
 
 
     // create an Autowired constructor to inject the categoryService and productService
