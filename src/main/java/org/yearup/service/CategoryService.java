@@ -7,42 +7,43 @@ import org.yearup.repository.CategoryRepository;
 import java.util.List;
 
 @Service
-public class CategoryService
-{
+public class CategoryService {
     private final CategoryRepository categoryRepository;
 
-    public CategoryService(CategoryRepository categoryRepository)
-    {
+    public CategoryService(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
     }
 
-    public List<Category> getAllCategories()
-    {
+    public List<Category> getAllCategories() {
         // get all categories
-        return null;
+        return categoryRepository.findAll();
     }
 
-    public Category getById(int categoryId)
-    {
+    public Category getById(int categoryId) {
         // get category by id
-        return null;
+        return categoryRepository.findById(categoryId)
+                .orElse(null);
     }
 
-    public Category create(Category category)
-    {
+    public Category create(Category category) {
         // create a new category
-        return null;
+        return categoryRepository.save(category);
     }
 
-    public Category update(int categoryId, Category category)
-    {
+    public Category update(int categoryId, Category category) {
         // update category and return the updated category
-        return null;
+        if (!categoryRepository.existsById(categoryId)) {return null;}
+        category.setCategoryId(categoryId);
+        return categoryRepository.save(category);
+
     }
 
-    public boolean delete(int categoryId)
-    {
+    public boolean delete(int categoryId) {
         // delete category
+        if (categoryRepository.existsById(categoryId)) {
+            categoryRepository.deleteById(categoryId);
+            return true;
+        }
         return false;
     }
 }

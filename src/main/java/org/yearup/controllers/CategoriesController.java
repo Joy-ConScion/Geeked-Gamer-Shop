@@ -16,6 +16,7 @@ import java.util.List;
 // http://localhost:8080/categories
 // add annotation to allow cross site origin requests
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/categories")
 public class CategoriesController {
@@ -34,8 +35,12 @@ public class CategoriesController {
 
     @GetMapping
     public ResponseEntity<List<Category>> getAll() {
-        // find and return all categories
-        return ResponseEntity.ok(categoryService.getAllCategories());
+
+        List<Category> categories = categoryService.getAllCategories();
+
+        System.out.println("Categories = " + categories);
+
+        return ResponseEntity.ok(categories);
     }
 
     // add the appropriate annotation for a get action
@@ -50,9 +55,9 @@ public class CategoriesController {
     // https://localhost:8080/categories/1/products
 
     @GetMapping("{categoryId}/products")
-    public List<Product> getProductsById(@PathVariable int categoryId) {
+    public ResponseEntity<List<Product>> getProductsById(@PathVariable int categoryId) {
         // get a list of product by categoryId
-        return ResponseEntity.ok(productService.listByCategoryId(categoryId)).getBody();
+        return ResponseEntity.ok(productService.listByCategoryId(categoryId));
 
 //        return productService.listByCategoryId(categoryId)
 //                .map(ResponseEntity::ok)
