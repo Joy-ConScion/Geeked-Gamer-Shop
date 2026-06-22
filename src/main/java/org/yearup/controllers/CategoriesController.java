@@ -3,6 +3,7 @@ package org.yearup.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.yearup.models.Category;
 import org.yearup.models.Product;
@@ -29,17 +30,13 @@ public class CategoriesController {
     public CategoriesController(CategoryService categoryService, ProductService productService) {
         this.categoryService = categoryService;
         this.productService = productService;
-
     }
     // add the appropriate annotation for a get action
 
     @GetMapping
     public ResponseEntity<List<Category>> getAll() {
-
         List<Category> categories = categoryService.getAllCategories();
-
         System.out.println("Categories = " + categories);
-
         return ResponseEntity.ok(categories);
     }
 
@@ -67,6 +64,7 @@ public class CategoriesController {
     // add annotation to call this method for a POST action
     // add annotation to ensure that only an ADMIN can call this function
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Category> addCategory(@RequestBody Category category) {
         // insert the category and return it with status 201 Created
         return ResponseEntity.status(HttpStatus.CREATED).body(categoryService.create(category));
