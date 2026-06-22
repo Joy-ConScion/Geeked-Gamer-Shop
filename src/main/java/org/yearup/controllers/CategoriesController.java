@@ -52,9 +52,11 @@ public class CategoriesController {
     @GetMapping("{categoryId}/products")
     public List<Product> getProductsById(@PathVariable int categoryId) {
         // get a list of product by categoryId
-        return productService.listByCategoryId(categoryId)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(productService.listByCategoryId(categoryId)).getBody();
+
+//        return productService.listByCategoryId(categoryId)
+//                .map(ResponseEntity::ok)
+//                .orElse(ResponseEntity.notFound().build());
     }
 
     // add annotation to call this method for a POST action
@@ -83,5 +85,10 @@ public class CategoriesController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();
+        /*    public void delete(int categoryId)
+    {
+        // delete category
+    }
+    This was code in category service class but was updated to work with current setup*/
     }
 }

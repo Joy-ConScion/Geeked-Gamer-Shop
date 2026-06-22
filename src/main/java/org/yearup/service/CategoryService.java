@@ -40,8 +40,9 @@ public class CategoryService
         return null;
     }
 
-    public void delete(int categoryId)
+    public boolean delete(int categoryId)
     {
         // delete category
+        return false;
     }
 }
