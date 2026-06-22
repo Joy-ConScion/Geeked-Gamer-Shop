@@ -26,6 +26,11 @@ public class CategoriesController {
 
     // create an Autowired constructor to inject the categoryService and productService
     @Autowired
+    public categoriesController(CategoryService categoryService, ProductService productService){
+        this.categoryService = categoryService;
+        this.productService = productService;
+
+    }
     // add the appropriate annotation for a get action
 
     @GetMapping
