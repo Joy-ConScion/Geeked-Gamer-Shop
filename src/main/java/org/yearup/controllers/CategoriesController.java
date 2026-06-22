@@ -23,10 +23,9 @@ public class CategoriesController {
     private ProductService productService;
 
 
-
     // create an Autowired constructor to inject the categoryService and productService
     @Autowired
-    public categoriesController(CategoryService categoryService, ProductService productService){
+    public CategoriesController(CategoryService categoryService, ProductService productService) {
         this.categoryService = categoryService;
         this.productService = productService;
 
@@ -42,11 +41,9 @@ public class CategoriesController {
     // add the appropriate annotation for a get action
 
     @GetMapping("/{id}")
-    public Category getById(@PathVariable int id) {
+    public ResponseEntity<Category> getById(@PathVariable int id) {
         // get the category by id
-        return categoryService.getById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(categoryService.getById(id));
     }
 
     // the url to return all products in category 1 would look like this
@@ -70,19 +67,19 @@ public class CategoriesController {
 
     // add annotation to call this method for a PUT (update) action - the url path must include the categoryId
     // add annotation to ensure that only an ADMIN can call this function
-    @PutMapping
-    public Category updateCategory(@PathVariable int id, @RequestBody Category category) {
+    @PutMapping("/{id}")
+    public ResponseEntity<Category> updateCategory(@PathVariable int id, @RequestBody Category category) {
         // update the category by id and return the updated category (200 OK)
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(categoryService.update(Category));
+        return ResponseEntity.ok(categoryService.update(id, category));
     }
 
 
     // add annotation to call this method for a DELETE action - the url path must include the categoryId
     // add annotation to ensure that only an ADMIN can call this function
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCategory(@PathVariable int id) {
         // delete the category by id and return status 204 No Content
-        if ( categoryService.delete(id);){
+        if (categoryService.delete(id)){
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();
