@@ -44,7 +44,11 @@ public class CategoriesController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Category> getById(@PathVariable int id) {
+        Category category = categoryService.getById(id);
         // get the category by id
+        if (category == null){
+            return ResponseEntity.notFound().build();
+        }
         return ResponseEntity.ok(categoryService.getById(id));
     }
 
