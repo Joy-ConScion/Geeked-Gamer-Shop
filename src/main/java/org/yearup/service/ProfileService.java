@@ -1,8 +1,11 @@
 package org.yearup.service;
 
 import org.springframework.stereotype.Service;
+import org.yearup.models.Product;
 import org.yearup.models.Profile;
 import org.yearup.repository.ProfileRepository;
+
+import java.util.List;
 
 @Service
 public class ProfileService
@@ -12,6 +15,10 @@ public class ProfileService
     public ProfileService(ProfileRepository profileRepository)
     {
         this.profileRepository = profileRepository;
+    }
+
+    public List<Profile> getAllProfiles(){
+        return profileRepository.findAll();
     }
 
     public Profile getById(int userId) {
@@ -24,10 +31,17 @@ public class ProfileService
         return profileRepository.save(profile);
     }
 
-    public Profile update(int userId) {
-        if (!profileRepository.existsById(userId)) {return null;}
-        profile.setCategoryId(userId);
-        return profileRepository.save(userId);
+    public Profile update(int userId, Profile profile) {
+        Profile existing = profileRepository.findById(userId).orElseThrow();
+        existing.setFirstName(profile.getFirstName());
+        existing.setLastName(profile.getLastName());
+        existing.setPhone(profile.getPhone());
+        existing.setEmail(profile.getEmail());
+        existing.setAddress(profile.getAddress());
+        existing.setCity(profile.getCity());
+        existing.setState(profile.getState());
+        existing.setZip(profile.getZip());
+        return profileRepository.save(existing);
 
     }
 
