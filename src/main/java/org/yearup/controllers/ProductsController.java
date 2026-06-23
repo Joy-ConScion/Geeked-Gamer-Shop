@@ -38,9 +38,10 @@ public class ProductsController {
     public List<Product> search(@RequestParam(name="cat", required = false) Integer categoryId,
                                 @RequestParam(name="minPrice", required = false) Double minPrice,
                                 @RequestParam(name="maxPrice", required = false) Double maxPrice,
-                                @RequestParam(name="subCategory", required = false) String subCategory)
+                                @RequestParam(name="subCategory", required = false) String subCategory,
+                                @RequestParam(name="featured", required = false) Boolean featured)/*Add a option where if they do not choose any filters, then auto show featured*/
     {
-        return productService.search(categoryId, minPrice, maxPrice, subCategory);
+        return productService.search(categoryId, minPrice, maxPrice, subCategory, featured);
     }
 
     @GetMapping("{id}")

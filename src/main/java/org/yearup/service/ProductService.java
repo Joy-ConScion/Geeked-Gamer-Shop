@@ -20,7 +20,7 @@ public class ProductService
         return productRepository.findAll();
     }
 
-    public List<Product> search(Integer categoryId, Double minPrice, Double maxPrice, String subCategory)
+    public List<Product> search(Integer categoryId, Double minPrice, Double maxPrice, String subCategory, Boolean featured)
     {
         List<Product> products = categoryId != null
                 ? productRepository.findByCategoryId(categoryId)
@@ -59,6 +59,7 @@ public class ProductService
         existing.setDescription(product.getDescription());
         existing.setSubCategory(product.getSubCategory());
         existing.setFeatured(product.isFeatured());
+        existing.setStock(product.getStock());
         existing.setImageUrl(product.getImageUrl());
         return productRepository.save(existing);
     }
