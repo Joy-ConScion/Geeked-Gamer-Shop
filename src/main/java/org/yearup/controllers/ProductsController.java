@@ -1,26 +1,37 @@
 package org.yearup.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.yearup.models.Category;
 import org.yearup.models.Product;
+import org.yearup.service.CategoryService;
 import org.yearup.service.ProductService;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("products")
-@CrossOrigin
-public class ProductsController
-{
+public class ProductsController {
     private final ProductService productService;
 
+    @Autowired
     public ProductsController(ProductService productService)
     {
         this.productService = productService;
     }
+
+//    @GetMapping
+//    @PreAuthorize("permitAll()")
+//    public ResponseEntity<List<Product>> getAll(){
+//        List<Product> products = productService.getAllProducts();
+//        System.out.println("Products =" + products);
+//        return ResponseEntity.ok(products);
+//    }
 
     @GetMapping("")
     @PreAuthorize("permitAll()")

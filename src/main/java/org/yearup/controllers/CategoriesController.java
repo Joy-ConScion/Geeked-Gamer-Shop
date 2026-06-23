@@ -34,6 +34,7 @@ public class CategoriesController {
     // add the appropriate annotation for a get action
 
     @GetMapping
+    @PreAuthorize("permitAll()")
     public ResponseEntity<List<Category>> getAll() {
         List<Category> categories = categoryService.getAllCategories();
         System.out.println("Categories = " + categories);
@@ -43,6 +44,7 @@ public class CategoriesController {
     // add the appropriate annotation for a get action
 
     @GetMapping("/{id}")
+    @PreAuthorize("permitAll()")
     public ResponseEntity<Category> getById(@PathVariable int id) {
         Category category = categoryService.getById(id);
         // get the category by id
@@ -56,6 +58,7 @@ public class CategoriesController {
     // https://localhost:8080/categories/1/products
 
     @GetMapping("{categoryId}/products")
+    @PreAuthorize("permitAll()")
     public ResponseEntity<List<Product>> getProductsById(@PathVariable int categoryId) {
         // get a list of product by categoryId
         return ResponseEntity.ok(productService.listByCategoryId(categoryId));
