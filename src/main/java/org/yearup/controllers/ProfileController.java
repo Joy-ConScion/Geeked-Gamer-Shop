@@ -26,7 +26,7 @@ public class ProfileController {
         this.userService = userService;
     }
 
-    @GetMapping
+    @GetMapping("/{userId}")
 //    @PreAuthorize("permitAll()")
     public Profile getUserId(@PathVariable int userId){
         Profile profile = profileService.getById(userId);
@@ -42,7 +42,7 @@ public class ProfileController {
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
-    @PutMapping
+    @PutMapping("/{userId}")
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Profile update(@PathVariable int userId, @RequestBody Profile profile){
         if (profileService.getById(userId) == null)
@@ -50,7 +50,7 @@ public class ProfileController {
         return profileService.update(userId, profile);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{userId}")
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> delete(@PathVariable int userId){
         if (profileService.getById(userId) == null)
