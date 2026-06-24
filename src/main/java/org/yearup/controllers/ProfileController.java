@@ -12,6 +12,8 @@ import org.yearup.models.User;
 import org.yearup.service.ProfileService;
 import org.yearup.service.UserService;
 
+import java.security.Principal;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/profile")
@@ -27,8 +29,11 @@ public class ProfileController {
     }
 
     @GetMapping
-//    @PreAuthorize("permitAll()")
-    public Profile getUserId(@PathVariable int userId){
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public Profile getUserId(Principal principal){
+        String userName = principal.getName();
+        User user = userService.getByUserName(userName);
+        int userId = user.getId();
         Profile profile = profileService.getById(userId);
         if (profile==null)
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -43,16 +48,22 @@ public class ProfileController {
     }
 
     @PutMapping
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public Profile update(@PathVariable int userId, @RequestBody Profile profile){
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public Profile update(Principal principal, @RequestBody Profile profile){
+        String userName = principal.getName();
+        User user = userService.getByUserName(userName);
+        int userId = user.getId();
         if (profileService.getById(userId) == null)
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         return profileService.update(userId, profile);
     }
 
     @DeleteMapping
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<Void> delete(@PathVariable int userId){
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<Void> delete(Principal principal){
+        String userName = principal.getName();
+        User user = userService.getByUserName(userName);
+        int userId = user.getId();
         if (profileService.getById(userId) == null)
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         profileService.delete(userId);
