@@ -1,11 +1,11 @@
 package org.yearup.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.yearup.models.ShoppingCart;
 import org.yearup.models.User;
 import org.yearup.service.ShoppingCartService;
@@ -48,14 +48,28 @@ public class ShoppingCartController
     // add a POST method to add a product to the cart - the url should be
     // https://localhost:8080/cart/products/15  (15 is the productId to be added)
     // return the updated cart with status 201 Created
-
+    @PostMapping
+    public ResponseEntity<ShoppingCart> addToCart(@RequestBody ShoppingCart shoppingCart){
+        ShoppingCart saved = shoppingCartService.create(shoppingCart);
+        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+    }
 
     // add a PUT method to update an existing product in the cart - the url should be
     // https://localhost:8080/cart/products/15  (15 is the productId to be updated)
     // the BODY should be a ShoppingCartItem - quantity is the only value that will be updated; return the cart (200 OK)
-
+    @PutMapping
+    public ShoppingCart updateCart(Principal principal, @RequestBody ShoppingCart shoppingCart){
+        stuff here
+        if (shoppingCartService.getCart(userId) == null);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        return shoppingCartService.updateCart(userId, shoppingCart);
+    }
 
     // add a DELETE method to clear all products from the current users cart
     // https://localhost:8080/cart  - return the (now empty) cart so the front end can refresh it (200 OK)
+    @DeleteMapping
+    public ResponseEntity<Void> delete(Principal principal){
+
+    }
 
 }
