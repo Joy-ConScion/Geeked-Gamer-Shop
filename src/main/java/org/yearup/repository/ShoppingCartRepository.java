@@ -13,9 +13,7 @@ public interface ShoppingCartRepository extends JpaRepository<CartItem, Integer>
 {
     List<CartItem> findByUserId(int userId);
 
-    @Query("SELECT c FROM CartItem c WHERE c.userId = :userId AND c.productId = :productId")
-    CartItem findByUserIdAndProductId(@Param("userId") int userId,
-                                      @Param("productId") int productId);
+    CartItem findByUserIdAndProductId( int userId, int productId);
 
     void deleteByUserId(int userId);
 }
