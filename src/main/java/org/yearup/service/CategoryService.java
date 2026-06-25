@@ -39,7 +39,7 @@ public class CategoryService {
     }
 
     public boolean delete(int categoryId) {
-        // delete category
+        // deleteCart category
         if (categoryRepository.existsById(categoryId)) {
             categoryRepository.deleteById(categoryId);
             return true;

@@ -92,14 +92,14 @@ public class CategoriesController {
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteCategory(@PathVariable int id) {
-        // delete the category by id and return status 204 No Content
+        // deleteCart the category by id and return status 204 No Content
         if (categoryService.delete(id)){
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();
-        /*    public void delete(int categoryId)
+        /*    public void deleteCart(int categoryId)
     {
-        // delete category
+        // deleteCart category
     }
     This was code in category service class but was updated to work with current setup*/
     }

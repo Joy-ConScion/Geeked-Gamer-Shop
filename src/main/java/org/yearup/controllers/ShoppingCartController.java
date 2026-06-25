@@ -74,7 +74,7 @@ public class ShoppingCartController
         int userId = user.getId();
         if (shoppingCartService.getByUserId(userId) == null)
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        shoppingCartService.delete(userId);
+        shoppingCartService.deleteCart(userId);
         return ResponseEntity.noContent().build();
     }
 
