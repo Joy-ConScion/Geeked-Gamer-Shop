@@ -50,7 +50,7 @@ public class ShoppingCartController
     // return the updated cart with status 201 Created
     @PostMapping
     public ResponseEntity<ShoppingCart> addToCart(@RequestBody ShoppingCart shoppingCart){
-        ShoppingCart saved = shoppingCartService.create(shoppingCart);
+        ShoppingCart saved = shoppingCartService.addToCart(shoppingCart);
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
@@ -69,7 +69,13 @@ public class ShoppingCartController
     // https://localhost:8080/cart  - return the (now empty) cart so the front end can refresh it (200 OK)
     @DeleteMapping
     public ResponseEntity<Void> delete(Principal principal){
-
+        String userName = principal.getName();
+        User user = userService.getByUserName(userName);
+        int userId = user.getId();
+        if (shoppingCartService.getByUserId(userId) == null)
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        shoppingCartService.delete(userId);
+        return ResponseEntity.noContent().build();
     }
 
 }
