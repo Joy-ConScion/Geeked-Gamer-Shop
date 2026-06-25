@@ -19,22 +19,20 @@ import java.security.Principal;
 @RestController
 @RequestMapping("shoppingcart")
 @PreAuthorize("isAuthenticated()")
-public class ShoppingCartController
-{
+public class ShoppingCartController {
     // a shopping cart controller depends on the service layer
     private ShoppingCartService shoppingCartService;
     private UserService userService;
 
     @Autowired
-    public ShoppingCartController(ShoppingCartService shoppingCartService, UserService userService){
+    public ShoppingCartController(ShoppingCartService shoppingCartService, UserService userService) {
         this.shoppingCartService = shoppingCartService;
         this.userService = userService;
     }
 
     // each method in this controller requires a Principal object as a parameter
     @GetMapping
-    public ShoppingCart getCart(Principal principal)
-    {
+    public ShoppingCart getCart(Principal principal) {
         // get the currently logged in username
         String userName = principal.getName();
         // find database user by username
@@ -49,7 +47,13 @@ public class ShoppingCartController
     // https://localhost:8080/cart/products/15  (15 is the productId to be added)
     // return the updated cart with status 201 Created
     @PostMapping
-    public ResponseEntity<ShoppingCart> addToCart(@RequestBody ShoppingCart shoppingCart){
+    public ResponseEntity<ShoppingCart> addToCart(@RequestBody ShoppingCart shoppingCart, Principal principal, @PathVariable int productId) {
+        String userName = principal.getName();
+        User user = userService.getByUserName(userName);
+        int userId = user.getId();
+
+        ShoppingCart cart = shoppingCartService.addToCart(userId, productId);
+        return ResponseEntity.status(201).body(cart);
         ShoppingCart saved = shoppingCartService.addToCart(shoppingCart);
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
@@ -58,17 +62,20 @@ public class ShoppingCartController
     // https://localhost:8080/cart/products/15  (15 is the productId to be updated)
     // the BODY should be a ShoppingCartItem - quantity is the only value that will be updated; return the cart (200 OK)
     @PutMapping
-    public ShoppingCart updateCart(Principal principal, @RequestBody ShoppingCart shoppingCart){
-        stuff here
-        if (shoppingCartService.getCart(userId) == null);
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        return shoppingCartService.updateCart(userId, shoppingCart);
+    public ShoppingCart updateCart(Principal principal, @RequestBody ShoppingCart shoppingCart, @PathVariable int productId) {
+        String userName = principal.getName();
+        User user = userService.getByUserName(userName);
+        int userId = user.getId();
+
+        if (shoppingCartService.getByUserId(userId) == null) ;
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        return shoppingCartService.updateCart(userId, productId);
     }
 
     // add a DELETE method to clear all products from the current users cart
     // https://localhost:8080/cart  - return the (now empty) cart so the front end can refresh it (200 OK)
     @DeleteMapping
-    public ResponseEntity<Void> delete(Principal principal){
+    public ResponseEntity<Void> deleteCart(Principal principal) {
         String userName = principal.getName();
         User user = userService.getByUserName(userName);
         int userId = user.getId();
