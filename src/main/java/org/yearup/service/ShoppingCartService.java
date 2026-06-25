@@ -1,5 +1,6 @@
 package org.yearup.service;
 
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import org.yearup.models.CartItem;
 import org.yearup.models.Product;
@@ -29,6 +30,8 @@ public class ShoppingCartService {
             ShoppingCartItem shoppingCartItem = new ShoppingCartItem();
             shoppingCartItem.setProduct(product);
             shoppingCartItem.setQuantity(cartItem.getQuantity());
+
+            basket.add(shoppingCartItem);
         }
         // load the user's cart rows, look up each product, and build the ShoppingCart
         return basket;
@@ -63,9 +66,10 @@ public class ShoppingCartService {
     }
 
     /*Is this supposed to deleteCart one item or the whole cart?*/
+    @Transactional
     public ShoppingCart deleteCart(int userId) {
         shoppingCartRepository.deleteByUserId(userId);
-        return getByUserId(userId);
+        return new ShoppingCart();
     }
 
 }
