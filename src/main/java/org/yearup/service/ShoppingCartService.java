@@ -12,7 +12,6 @@ import java.util.List;
 
 @Service
 public class ShoppingCartService {
-    // a shopping cart is built from cart rows plus a product lookup for each row
     private final ShoppingCartRepository shoppingCartRepository;
     private final ProductService productService;
 
@@ -33,11 +32,9 @@ public class ShoppingCartService {
 
             basket.add(shoppingCartItem);
         }
-        // load the user's cart rows, look up each product, and build the ShoppingCart
         return basket;
     }
 
-    // add additional methods here
     public ShoppingCart addToCart(int userId, int productId) {
         CartItem existing = shoppingCartRepository.findByUserIdAndProductId(userId, productId);
 
@@ -65,7 +62,6 @@ public class ShoppingCartService {
         return getByUserId(userId);
     }
 
-    /*Is this supposed to deleteCart one item or the whole cart?*/
     @Transactional
     public ShoppingCart deleteCart(int userId) {
         shoppingCartRepository.deleteByUserId(userId);

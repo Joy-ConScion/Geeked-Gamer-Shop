@@ -30,7 +30,6 @@ public class ProductService
                        .filter(p -> minPrice == null || p.getPrice() >= minPrice)
                        .filter(p -> maxPrice == null || p.getPrice() <= maxPrice)
                        .filter(p -> subCategory == null || subCategory.equalsIgnoreCase(p.getSubCategory()))
-//                       .filter(Product::isFeatured)
                        .toList();
     }
 
@@ -41,7 +40,7 @@ public class ProductService
 
     public Product getById(int productId)
     {
-        return productRepository.findById(productId).orElse(null);/*req_0431d99cb6bf4b87b4a0725c42426b8c*/
+        return productRepository.findById(productId).orElse(null);
     }
 
     public Product create(Product product)

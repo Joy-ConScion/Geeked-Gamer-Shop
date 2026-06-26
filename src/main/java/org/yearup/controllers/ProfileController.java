@@ -41,7 +41,6 @@ public class ProfileController {
     }
 
     @PostMapping
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Profile> create(@RequestBody Profile profile) {
         Profile saved = profileService.create((profile));
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);

@@ -12,11 +12,6 @@ import org.yearup.service.ProductService;
 
 import java.util.List;
 
-// add the annotations to make this a REST controller
-// add the annotation to make this controller the endpoint for the following url
-// http://localhost:8080/categories
-// add annotation to allow cross site origin requests
-
 @CrossOrigin
 @RestController
 @RequestMapping("categories")
@@ -25,13 +20,11 @@ public class CategoriesController {
     private final ProductService productService;
 
 
-    // create an Autowired constructor to inject the categoryService and productService
     @Autowired
     public CategoriesController(CategoryService categoryService, ProductService productService) {
         this.categoryService = categoryService;
         this.productService = productService;
     }
-    // add the appropriate annotation for a get action
 
     @GetMapping
     @PreAuthorize("permitAll()")
@@ -40,8 +33,6 @@ public class CategoriesController {
         System.out.println("Categories = " + categories);
         return ResponseEntity.ok(categories);
     }
-
-    // add the appropriate annotation for a get action
 
     @GetMapping("/{id}")
     @PreAuthorize("permitAll()")
@@ -54,53 +45,31 @@ public class CategoriesController {
         return ResponseEntity.ok(categoryService.getById(id));
     }
 
-    // the url to return all products in category 1 would look like this
-    // https://localhost:8080/categories/1/products
-
     @GetMapping("{categoryId}/products")
     @PreAuthorize("permitAll()")
     public ResponseEntity<List<Product>> getProductsById(@PathVariable int categoryId) {
-        // get a list of product by categoryId
         return ResponseEntity.ok(productService.listByCategoryId(categoryId));
-
-//        return productService.listByCategoryId(categoryId)
-//                .map(ResponseEntity::ok)
-//                .orElse(ResponseEntity.notFound().build());
     }
 
-    // add annotation to call this method for a POST action
-    // add annotation to ensure that only an ADMIN can call this function
     @PostMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Category> addCategory(@RequestBody Category category) {
-        // insert the category and return it with status 201 Created
         return ResponseEntity.status(HttpStatus.CREATED).body(categoryService.create(category));
     }
 
-    // add annotation to call this method for a PUT (update) action - the url path must include the categoryId
-    // add annotation to ensure that only an ADMIN can call this function
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Category> updateCategory(@PathVariable int id, @RequestBody Category category) {
-        // update the category by id and return the updated category (200 OK)
         return ResponseEntity.ok(categoryService.update(id, category));
     }
 
 
-    // add annotation to call this method for a DELETE action - the url path must include the categoryId
-    // add annotation to ensure that only an ADMIN can call this function
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteCategory(@PathVariable int id) {
-        // deleteCart the category by id and return status 204 No Content
         if (categoryService.delete(id)){
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();
-        /*    public void deleteCart(int categoryId)
-    {
-        // deleteCart category
-    }
-    This was code in category service class but was updated to work with current setup*/
     }
 }

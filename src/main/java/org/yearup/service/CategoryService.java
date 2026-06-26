@@ -15,23 +15,19 @@ public class CategoryService {
     }
 
     public List<Category> getAllCategories() {
-        // get all categories
         return categoryRepository.findAll();
     }
 
     public Category getById(int categoryId) {
-        // get category by id
         return categoryRepository.findById(categoryId)
                 .orElse(null);
     }
 
     public Category create(Category category) {
-        // create a new category
         return categoryRepository.save(category);
     }
 
     public Category update(int categoryId, Category category) {
-        // update category and return the updated category
         if (!categoryRepository.existsById(categoryId)) {return null;}
         category.setCategoryId(categoryId);
         return categoryRepository.save(category);
@@ -39,7 +35,6 @@ public class CategoryService {
     }
 
     public boolean delete(int categoryId) {
-        // deleteCart category
         if (categoryRepository.existsById(categoryId)) {
             categoryRepository.deleteById(categoryId);
             return true;
