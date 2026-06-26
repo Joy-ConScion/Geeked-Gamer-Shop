@@ -26,6 +26,12 @@ Frontend changes were not required and required a seperate repository. Only a mi
 -- The other reason I found it interesting is that I ended up discovering that there were two different ways to handle it. You could either clear the whole class at the top or authorize individual methods within the class. And while both work, they were just for different use case scenarios. 
 
 ## Screenshots
+These are simply some screenshots to exhibit that the front end loads and the required two phases passes inspection.
+![front-end_cap3.png](front-end_cap3.png)
+![cap3_phase-2-results.png](cap3_phase-2-results.png)
+![cap3_phase-1-results.png](cap3_phase-1-results.png)
+![cap3_phase-0-results.png](cap3_phase-0-results.png)
+
 
 ## Entity Related Diagram (ERD)
 ![ERD_cap3.png](ERD_cap3.png)
