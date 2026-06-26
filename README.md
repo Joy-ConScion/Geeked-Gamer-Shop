@@ -35,3 +35,7 @@ These are simply some screenshots to exhibit that the front end loads and the re
 
 ## Entity Related Diagram (ERD)
 ![ERD_cap3.png](ERD_cap3.png)
+
+----------
+
+Link to Front-End Repo (Required to access FrontEnd): https://github.com/Joy-ConScion/GeekedGamerShop-FrontEnd
