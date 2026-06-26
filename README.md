@@ -20,10 +20,10 @@ A GitHub Project board was created to manage the workload and a trail of commit 
 Frontend changes were not required and required a seperate repository. Only a minor spelling error was addressed.
 
 ## Interesting Code
-
-
+![interesting code_cap3.png](interesting%20code_cap3.png)
+-- For my interesting piece of code, I chose 
 
 ## Screenshots
 
 ## Entity Related Diagram (ERD)
-
+![ERD_cap3.png](ERD_cap3.png)

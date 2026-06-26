@@ -23,33 +23,33 @@ public class ProfileController {
     private final UserService userService;
 
     @Autowired
-    public ProfileController(ProfileService profileService, UserService userService){
+    public ProfileController(ProfileService profileService, UserService userService) {
         this.profileService = profileService;
         this.userService = userService;
     }
 
     @GetMapping
     @PreAuthorize("hasRole('ROLE_USER')")
-    public Profile getUserId(Principal principal){
+    public Profile getUserId(Principal principal) {
         String userName = principal.getName();
         User user = userService.getByUserName(userName);
         int userId = user.getId();
         Profile profile = profileService.getById(userId);
-        if (profile==null)
+        if (profile == null)
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         return profile;
     }
 
     @PostMapping
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<Profile> create(@RequestBody Profile profile){
+    public ResponseEntity<Profile> create(@RequestBody Profile profile) {
         Profile saved = profileService.create((profile));
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
     @PutMapping
     @PreAuthorize("hasRole('ROLE_USER')")
-    public Profile update(Principal principal, @RequestBody Profile profile){
+    public Profile update(Principal principal, @RequestBody Profile profile) {
         String userName = principal.getName();
         User user = userService.getByUserName(userName);
         int userId = user.getId();
@@ -60,7 +60,7 @@ public class ProfileController {
 
     @DeleteMapping
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<Void> delete(Principal principal){
+    public ResponseEntity<Void> delete(Principal principal) {
         String userName = principal.getName();
         User user = userService.getByUserName(userName);
         int userId = user.getId();
