@@ -37,5 +37,8 @@ These are simply some screenshots to exhibit that the front end loads and the re
 ![ERD_cap3.png](ERD_cap3.png)
 
 ----------
+## AI Use
 
+AI was used during this assignmen and tags will be added along with what exactly it did. Though for the most (~95%) part AI was not used during the assignment. 
+---------
 Link to Front-End Repo (Required to access FrontEnd): https://github.com/Joy-ConScion/GeekedGamerShop-FrontEnd
